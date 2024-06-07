@@ -1,26 +1,45 @@
 import { Injectable } from '@nestjs/common';
-import { Task, TaskStatus } from './crud.model';
+import { Task } from './crud.model';
 import ShortUniqueId from 'short-unique-id';
 
-@Injectable()              //why?
+@Injectable()              
 export class CrudService {
-    private tasks:Task[] = []  //private used for encapsulation
+    private tasks:Task[] = []  
 
     getAllTask():Task[]
     {
         return this.tasks
     }
+    getTaskById(id:string):Task{
+        return this.tasks.find(task=>task.id===id); 
+    }
+
     createTask(title:string,description:string):Task{
-        const ids = new ShortUniqueId({ length: 10 });
+        //const ids = new ShortUniqueId();
         //const id = ids.toString();
-         const id= new Date().toString();
+        const id= new Date().toString();
         const task:Task={
             id,
             title,
             description,
-            status:TaskStatus.OPEN
         }
         this.tasks.push(task);
         return task
     }
+
+    deleteTask(id:string){
+       this.tasks = this.tasks.filter(task=>task.id!==id)
+    }
+
+    updateTaskTitle(id:string,taskTitle:string,taskDescription:string){
+        let task=this.getTaskById(id)
+        if (taskTitle) {
+            task.title = taskTitle;
+        }
+        if(taskDescription) {
+            task.description = taskDescription;
+        }
+        return task
+    }
+    
 }
