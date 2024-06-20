@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { CrudService } from './crud.service';
 import { Task } from './crud.model';
-import { CreateTaskDTO } from './dto/createCrud.dto';
+import { CreateTaskDTO } from './dto/CreateTask.dto';
 
 @Controller('crud')
 export class CrudController {
