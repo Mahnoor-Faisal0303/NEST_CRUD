@@ -1,6 +1,4 @@
 import { PassportStrategy } from "@nestjs/passport";
 
 
-// export class LocalStrategy extends PassportStrategy(Strategy) {
-    
-// }
+// export class LocalStrategy extends PassportStrategy(Strategy) {}
