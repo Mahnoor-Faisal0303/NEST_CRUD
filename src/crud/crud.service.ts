@@ -17,7 +17,9 @@ export class CrudService {
     createTask(title:string,description:string):Task{
         //const ids = new ShortUniqueId();
         //const id = ids.toString();
-        const id= new Date().toString();
+        const uid = new ShortUniqueId({ length: 10 });
+        const id=uid.rnd();
+        //const id= new Date().toString();
         const task:Task={
             id,
             title,

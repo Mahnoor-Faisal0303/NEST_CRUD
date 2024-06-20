@@ -3,12 +3,16 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   Param,
   Patch,
   Post,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { CrudService } from './crud.service';
 import { Task } from './crud.model';
+import { CreateTaskDTO } from './dto/createCrud.dto';
 
 @Controller('crud')
 export class CrudController {
@@ -18,17 +22,18 @@ export class CrudController {
   getAllTasks(): Task[] {
     return this.taskService.getAllTask();
   }
-  @Get('/:id')
+  @Get('/:id')          // localhost/crud/task/1
   getTaskById(@Param('id') id: string): Task {
     return this.taskService.getTaskById(id);
   }
 
   @Post()
+  @HttpCode(200)
+  @UsePipes(ValidationPipe)
   createTask(
-    @Body('title') title: string,
-    @Body('description') description: string,
+    @Body() task:CreateTaskDTO
   ): Task {
-    return this.taskService.createTask(title, description);
+    return this.taskService.createTask(task.title, task.description);
   }
 
   @Delete('/:id')
@@ -46,3 +51,5 @@ export class CrudController {
     return this.taskService.updateTaskTitle(id, title,description);
   }
 }
+
+
